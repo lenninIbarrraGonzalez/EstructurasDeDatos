@@ -41,7 +41,39 @@ class HashTable {
     //si no encuentra nada
     return undefined;
   }
+
+  //recorriendo un array de arrays
+  getAllKeys() {
+    const keys = [];
+    for (let i = 0; i < this.data.length; i++) {
+      if (this.data[i]) {
+        for (let j = 0; j < this.data[i].length; j++) {
+          keys.push(this.data[i][j][0]);
+        }
+      }
+    }
+    return keys;
+  }
+
+  remove(key) {
+    const address = this.hashMethod(key);
+    const currentBucket = this.data[address];
+    if (currentBucket) {
+      for (let i = 0; i < currentBucket.length; i++) {
+        if (currentBucket[i][0] === key) {
+          const deletedValue = this.data[address][i];
+          this.data[address].splice(i, 1);
+          return deletedValue;
+        }
+      }
+    }
+    return undefined;
+  }
+
 }
+
+
+
 
 // separo 50 espacios libres - buckets
 const myHashTable = new HashTable(50);
