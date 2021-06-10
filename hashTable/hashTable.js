@@ -2,7 +2,7 @@ class HashTable {
   constructor(size) {
     this.data = new Array(size);
   }
-  //hash function auyda a generar el hash -- exiten varios en github
+  //hash function ayuda a generar el hash -- exiten varios en github
   hashMethod(key) {
     let hash = 0;
     //generar un numero random
@@ -12,22 +12,47 @@ class HashTable {
     }
     return hash;
   }
+  //metodo para agregar elementos al bucket
   set(key, value) {
     const address = this.hashMethod(key);
+    //si esta dirección exite 
     if (!this.data[address]) {
       this.data[address] = [];
     }
+    //evitar la colision -- no borrar la información
     this.data[address].push([key, value]);
     return this.data;
   }
+  //metodo para buscar un elemento
+  get(key) {
+    const address = this.hashMethod(key);
+    //le estamos pasando el indice
+    const currentBucket = this.data[address];
+    //si existe, si es true
+    if (currentBucket) {
+      for (let i = 0; i < currentBucket.length; i++) {
+        //recorriendo un array de arrays
+        if (currentBucket[i][0] === key) {
+          //retorna eñ valor 
+          return currentBucket[i][1];
+        }
+      }
+    }
+    //si no encuentra nada
+    return undefined;
+  }
 }
+
 // separo 50 espacios libres - buckets
 const myHashTable = new HashTable(50);
 
+//probandolo en el navegador se mira el resultado
 //guardando en el bucket de forma random
 myHashTable.set("Lennin", 1981);
 myHashTable.set("Mario", 1990);
 myHashTable.set("Luisa", 1984);
 myHashTable.set("Fernanda", 1984);
-
+myHashTable.set("Lennin", 1983);
+//buscando un valor
+myHashTable.get("Lennin");
 console.log(myHashTable);
