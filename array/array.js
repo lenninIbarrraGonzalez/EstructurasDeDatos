@@ -22,6 +22,7 @@ class MyArray {
     // lastItem sirve para mostrar cual fue el Elemento que se elimino
     const lastItem = this.data[this.length - 1];
     //borramos el elemento
+    //delete es un keywork no un llamado a la función delete, palabra reservada que borra un elemento
     delete this.data[this.length - 1];
     this.length--;
     return lastItem;
